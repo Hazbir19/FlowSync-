@@ -9,12 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/server": "^4.12.2",
+    "@as-integrations/next": "^3.2.0",
+    "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
     "daisyui": "^5.0.43",
+    "date-fns": "^4.1.0",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6",
+    "lucide-react": "^0.518.0",
     "mongodb": "^6.17.0",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.58.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

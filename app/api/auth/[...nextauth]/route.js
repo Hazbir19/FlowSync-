@@ -1,7 +1,7 @@
+import { LoginAuth } from "@/app/actions/auth/LoginAuth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-const handler = NextAuth({
+export const NextAuthOptions = {
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -15,19 +15,18 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log("Credentials:", credentials);
         const { email, password } = credentials;
-        if (email === "test@test.com" && password === "123456") {
-          return { id: 1, name: "Test User", email };
+        const user = await LoginAuth(credentials);
+        // console.log("User:", user);
+        // You can return any user object here, it will be saved in the session
+        if (user) {
+          // If you return null or false then the credentials will be rejected
+          // You can also throw an error to display a message in the sign-in form
+          return user;
+        } else {
+          // If you return null or false then the credentials will be rejected
+          throw new Error("Invalid email or password");
         }
-        // const res = await fetch("/your/endpoint", {
-        //   method: "POST",
-        //   body: JSON.stringify(credentials),
-        //   headers: { "Content-Type": "application/json" },
-        // });
-        // const user = await res.json();
-
-        // If no error and we have user data, return it
       },
     }),
   ],
@@ -40,19 +39,35 @@ const handler = NextAuth({
       // You can add custom logic here to check if the user is allowed to sign in
       // For example, you can check if the user is active or has a specific role
 
-
       return true;
     },
     //   async redirect({ url, baseUrl }) {
     //     return baseUrl
     //   },
-    //   async session({ session, token, user }) {
-    //     return session
-    //   },
-    //   async jwt({ token, user, account, profile, isNewUser }) {
-    //     return token
-    //   }
+    async jwt({ token, user }) {
+      // When user logs in, attach role
+      if (user) {
+        token.id = user?._id;
+        token.firstName = user?.firstName;
+        token.email = user?.email;
+        token.role = user?.role; // 👈 Add this
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Attach role from token to session
+      if (token) {
+        session.user.id = token?.id;
+        session.user.firstName = token?.firstName;
+        session.user.email = token?.email;
+        session.user.role = token?.role; // 👈 Add this
+      }
+      return session;
+    },
   },
-});
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const handler = NextAuth(NextAuthOptions);
 
 export { handler as GET, handler as POST };

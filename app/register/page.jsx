@@ -1,13 +1,11 @@
-import React from 'react'
+import Register_page from "./components/Register_page";
 
-const Register_Page = () => {
-    return (
-        <>
-        <div>
-            
-        </div>
-        </>
-    )
-}
+const RegisterPage = () => {
+  return (
+    <>
+      <Register_page />
+    </>
+  );
+};
 
-export default Register_Page
+export default RegisterPage;

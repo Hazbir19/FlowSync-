@@ -9,11 +9,17 @@ export default function SignIn_Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signIn("credentials", {
-      email,
-      password,
-      callbackUrl: "/dashboard",
-    });
+ const response = await signIn("credentials", {
+   email,
+   password,
+   callbackUrl: "/dashboard",
+ });
+ if (response.success) {
+   toast.success(response.message);
+   reset();
+ } else {
+   toast.error("Error From Toast", response.message);
+ }
   };
 
   return (

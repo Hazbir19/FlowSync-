@@ -1,4 +1,6 @@
+import { User } from 'lucide-react'
 import React from 'react'
+import UserInfo from './components/UserInfo'
 
 const Dashboard = () => {
     return (
@@ -10,6 +12,7 @@ const Dashboard = () => {
                 <p className="text-center mt-4">
                     This is a protected route that only authenticated users can access.
                 </p>
+                <UserInfo/>
             </div>
         </div>
     )

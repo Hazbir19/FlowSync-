@@ -1,16 +1,22 @@
 @import "tailwindcss";
 @plugin "daisyui";
 :root {
---primary-color: #fffadc; /* Example primary color */
---secondary-color: #acc8a7; /* Example secondary color */
---background-color: #f3f4f6; /* Example background color */
---text-color: #111827; /* Example text color */
---border-color: #f3f8ff; /* Example border color */
+  --primary-color: #fffadc; /* Example primary color */
+  --secondary-color: #acc8a7; /* Example secondary color */
+  --background-color: #f3f4f6; /* Example background color */
+  --text-color: #111827; /* Example text color */
+  --border-color: #f3f8ff; /* Example border color */
 }
-.layout-primary-color{
-    background-color: var(--primary-color);
+.layout-primary-color {
+  background-color: var(--primary-color);
 }
-.button-secondary-color{
-    background-color: var(--secondary-color);
-    border: 5px solid var(--border-color);
+.button-secondary-color {
+  background-color: var(--secondary-color);
+
+}
+.layout-background-color {
+  background-color: var(--background-color);
+}
+.text-color {
+  color: var(--text-color);
 }

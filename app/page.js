@@ -1,12 +1,12 @@
 import Image from "next/image";
-import LoginPage from "./login/page";
+import Dynamic_Login from "./components/Dynamic_Login";
 
 export default function Home() {
   return (
     <>
-      <div className="layout-primary-color">
+      <div className="layout-background-color">
         <div className="max-w-screen-xl mx-auto px-4 py-8 flex-1/2">
-          <div className="lg:flex md:flex items-center justify-center gap-12">
+          <div className="lg:flex md:flex flex items-center justify-center gap-12">
             <div className="">
               <h1 className="text-3xl font-bold text-left">
                 Stay in Sync. Flow Your Work.
@@ -29,7 +29,7 @@ export default function Home() {
             </div>
           </div>
           <div className="max-w-screen-lg mx-auto my-12">
-            <LoginPage></LoginPage>
+            <Dynamic_Login />
           </div>
         </div>
       </div>
