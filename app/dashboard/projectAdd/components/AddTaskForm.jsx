@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { CalendarIcon, SendIcon } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import addProject from "@/app/actions/auth/AddProject";
 
 const departments = [
   "Financial Department",
@@ -20,6 +21,7 @@ const statusOptions = [
   "In Progress",
   "Completed",
   "On Hold",
+  "delayed",
   "Rejected",
 ];
 
@@ -33,16 +35,16 @@ const AddTaskForm = () => {
   const [deadLineDate, setDeadLineDate] = useState(new Date());
 
   const onSubmit = (data) => {
-    data.submitDate = submitDate;
-    data.deadLineDate = deadLineDate;
-    console.log("Submitted Data:", data);
+    data.submitDate = submitDate.toISOString().split("T")[0]; // Format to YYYY-MM-DD
+    data.deadLineDate = deadLineDate.toISOString().split("T")[0];
+    addProject(data);
     // Send to server or API here
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-6"
+      className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-6 my-24"
     >
       <h2 className="text-2xl font-semibold text-center">
         Add New Task / Project
@@ -60,30 +62,36 @@ const AddTaskForm = () => {
           <span className="text-red-500 text-sm">This field is required</span>
         )}
       </div>
-      {/* Submit Date */}
-      <div>
-        <label className="block font-medium mb-1">Submit Date</label>
-        <div className="relative">
-          <DatePicker
-            selected={submitDate}
-            onChange={(date) => setSubmitDate(date)}
-            className="w-full border border-gray-300 p-2 rounded-md cursor-pointer"
-            dateFormat="yyyy-MM-dd"
-          />
-          <CalendarIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
+      <div className="lg:flex lg:justify-start w-full">
+        {/* Submit Date */}
+        <div className="lg:mr-4 mb-4 lg:mb-0 w-full">
+          <label className="block font-medium mb-1">Submit Date</label>
+          <div className="relative w-full bg-white">
+            <DatePicker
+              selected={submitDate}
+              onChange={(date) => {
+                setSubmitDate(date);
+              }}
+              className="w-full border border-gray-300 p-2 rounded-md cursor-pointer"
+              dateFormat="yyyy-MM-dd"
+            />
+            <CalendarIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
+          </div>
         </div>
-      </div>
-      {/* Deadline */}
-      <div>
-        <label className="block font-medium mb-1">Deadline Date</label>
-        <div className="relative">
-          <DatePicker
-            selected={deadLineDate}
-            onChange={(date) => setDeadLineDate(date)}
-            className="w-full border border-gray-300 p-2 rounded-md cursor-pointer"
-            dateFormat="yyyy-MM-dd"
-          />
-          <CalendarIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
+        {/* Deadline */}
+        <div className="lg:mr-4 mb-4 lg:mb-0 w-full">
+          <label className="block font-medium mb-1">Deadline Date</label>
+          <div className="relative w-full">
+            <DatePicker
+              selected={deadLineDate}
+              onChange={(date) => {
+                setDeadLineDate(date);
+              }}
+              className="w-full border border-gray-300 p-2 rounded-md cursor-pointer"
+              dateFormat="yyyy-MM-dd"
+            />
+            <CalendarIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" />
+          </div>
         </div>
       </div>
 

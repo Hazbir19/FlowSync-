@@ -15,7 +15,7 @@ export default function Register_page() {
     // Add default values
     const finalData = {
       ...data,
-      role: "user",
+      role: "employee", // Default role
     };
      const response =   await RegisterUser(finalData)
          if (response.success) {

@@ -12,4 +12,7 @@ export const typeDefs = gql`
   type Query {
     users: [User]!
   }
+  type Mutation {
+    updateUserRole(id: ID!, role: String!): User
+  }
 `;
