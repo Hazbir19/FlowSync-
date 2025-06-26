@@ -96,22 +96,24 @@ const AllUsers = () => {
                 {user.role}
               </td>
               <td className="px-4 py-2 border-[#acc8a7] border-b">
-                {user.role !== "HR" && (
+                {user.role !== "HR" && user.role !== "admin" && (
                   <button
                     onClick={() => handleMakeHR(user.id)}
-                    className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                    className=" button-secondary-color text-gray-50 text-lg  cursor-pointer font-medium px-3 py-1 rounded hover:bg-[#acc8a7] hover:text-gray-800"
                   >
                     Make HR
                   </button>
                 )}
               </td>
-              <td className="px-4 py-2 border-[#acc8a7] border-b">
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-700"
-                >
-                  Fired
-                </button>
+              <td className="px-4 py-2 border-[#acc8a7] border-b ">
+                {user.role !== "admin" && (
+                  <button
+                    onClick={() => handleDelete(user.id)}
+                    className="bg-red-300 text-gray-50 text-lg font-medium px-5 py-1 rounded hover:bg-red-700 cursor-pointer"
+                  >
+                    Fired
+                  </button>
+                )}
               </td>
             </tr>
           ))}

@@ -15,23 +15,26 @@ export async function getUsers() {
     role: user.role,
   }));
 }
-// NEW: Update role function
-export async function updateUserRole(id, role) {
-  const collection = dbConnect(userCollection);
-  const result = await collection.updateOne(
-    { _id: new ObjectId(id) },
-    { $set: { role } },
-    { returnDocument: "after" }
-  );
+export async function getHRUsers() {
+  const collection = dbConnect(collectionNames.userCollection);
+  const users = await collection.find({ role: "HR" }).toArray();
 
-  const user = result.value;
-  if (!user) return null;
-
-  return {
+  return users.map((user) => ({
     id: user._id.toString(),
     firstName: user.firstName,
     email: user.email,
-    department: user.department,
-    role: user.role,
-  };
+  }));
 }
+export async function getAllProject() {
+  const collection = dbConnect(collectionNames.projectCollection);
+  const projects = await collection.find().toArray();
+
+  return projects.map((project) => ({
+    id: project._id.toString(),
+    title: project?.title,
+    status: project.status,
+    department: project.department,
+    hrEmail: project.hrEmail,
+    hrName: project.hrName,
+  }));
+} 

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-
+import { all } from "axios";
 
 export const typeDefs = gql`
   type User {
@@ -9,10 +9,17 @@ export const typeDefs = gql`
     department: String
     role: String
   }
+  type allProject {
+    id: ID!
+    title: String!
+    status: String
+    department: String
+    hrEmail: String
+    hrName: String
+  }
   type Query {
     users: [User]!
-  }
-  type Mutation {
-    updateUserRole(id: ID!, role: String!): User
+    hrUsers: [User]!
+    allProjects: [allProject]!
   }
 `;

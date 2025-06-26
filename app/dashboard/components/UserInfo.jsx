@@ -7,15 +7,16 @@ function UserInfo() {
 
     const {data: session, status} =  useSession();
 status === "loading" && <div>Loading...</div>;
-const { firstName ,email} = session?.user || {};
-    
-      return (
-        <>
-    <div>{status} </div>    
+const { firstName, email, department } = session?.user || {};
+
+return (
+  <>
+    <div>{status} </div>
     <div>{firstName}</div>
     <div>{email}</div>
-        </>
-  )
+    <div>{department}</div>
+  </>
+);
 }
 
 export default UserInfo

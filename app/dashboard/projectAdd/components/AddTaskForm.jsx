@@ -1,20 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CalendarIcon, SendIcon } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import addProject from "@/app/actions/auth/AddProject";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const departments = [
-  "Financial Department",
-  "Deal Department",
-  "Design Department",
-  "Analysis Department",
-  "Product (Development) Department",
-  "Testing Department",
-  "Billing Department",
-];
+const USER_QUERY = `
+  query {
+    hrUsers {
+      id
+      firstName
+      email
+    }
+  }
+`;
 
 const statusOptions = [
   "Pending",
@@ -33,11 +35,27 @@ const AddTaskForm = () => {
   } = useForm();
   const [submitDate, setSubmitDate] = useState(new Date());
   const [deadLineDate, setDeadLineDate] = useState(new Date());
-
+  const [hrUsers, setHrUsers] = useState([]);
+  useEffect(() => {
+    axios
+      .post("/api/graphql", { query: USER_QUERY })
+      .then((res) => {
+        setHrUsers(res.data.data.hrUsers);
+      })
+      .catch((err) => {
+        console.error("Error fetching HRs:", err);
+      });
+  }, []);
   const onSubmit = (data) => {
     data.submitDate = submitDate.toISOString().split("T")[0]; // Format to YYYY-MM-DD
     data.deadLineDate = deadLineDate.toISOString().split("T")[0];
-    addProject(data);
+    addProject(data).then((response) => {
+      if (response.success) {
+        toast.success("Project added successfully!");
+      } else {
+        toast.error("Failed to add project: ");
+      }
+    });
     // Send to server or API here
   };
 
@@ -46,9 +64,7 @@ const AddTaskForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-6 my-24"
     >
-      <h2 className="text-2xl font-semibold text-center">
-        Add New Task / Project
-      </h2>
+      <h2 className="text-2xl font-semibold text-center">Add New Project</h2>
 
       {/* Title */}
       <div>
@@ -119,9 +135,21 @@ const AddTaskForm = () => {
           className="w-full border border-gray-300 p-2 rounded-md"
         >
           <option value="">Select department</option>
-          {departments.map((dept) => (
-            <option key={dept} value={dept}>
-              {dept}
+
+          <option value="HR Department">HR Department</option>
+        </select>
+      </div>
+      {/* HR Email */}
+      <div>
+        <label className="block font-medium mb-1">HR Email</label>
+        <select
+          {...register("hrEmail", { required: true })}
+          className="w-full border border-gray-300 p-2 rounded-md"
+        >
+          <option value="">Select HR Email</option>
+          {hrUsers.map((user) => (
+            <option key={user.id} value={user.email}>
+              {user.email}
             </option>
           ))}
         </select>
@@ -130,21 +158,17 @@ const AddTaskForm = () => {
       {/* HR Name */}
       <div>
         <label className="block font-medium mb-1">HR Name</label>
-        <input
+        <select
           {...register("hrName", { required: true })}
           className="w-full border border-gray-300 p-2 rounded-md"
-          placeholder="Enter HR's name"
-        />
-      </div>
-
-      {/* Description */}
-      <div>
-        <label className="block font-medium mb-1">Description</label>
-        <textarea
-          {...register("description")}
-          className="w-full border border-gray-300 p-2 rounded-md min-h-[100px]"
-          placeholder="Enter task or project description"
-        />
+        >
+          <option value="">Select HR Name</option>
+          {hrUsers.map((user) => (
+            <option key={user.id} value={user.firstName}>
+              {user?.firstName}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Submit Button */}

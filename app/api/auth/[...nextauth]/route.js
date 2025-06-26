@@ -1,6 +1,7 @@
 import { LoginAuth } from "@/app/actions/auth/LoginAuth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { to } from "./../../../../.next/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_61dcf9ba._";
 export const NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -42,7 +43,7 @@ export const NextAuthOptions = {
       return true;
     },
     //   async redirect({ url, baseUrl }) {
-    //     return baseUrl
+    //     return baseUrl*/
     //   },
     async jwt({ token, user }) {
       // When user logs in, attach role
@@ -51,6 +52,7 @@ export const NextAuthOptions = {
         token.firstName = user?.firstName;
         token.email = user?.email;
         token.role = user?.role; // 👈 Add this
+        token.department = user?.department; // 👈 Add this if you want to include department
       }
       return token;
     },
@@ -61,6 +63,7 @@ export const NextAuthOptions = {
         session.user.firstName = token?.firstName;
         session.user.email = token?.email;
         session.user.role = token?.role; // 👈 Add this
+        session.user.department = token?.department; // 👈 Add this if you want to include department
       }
       return session;
     },

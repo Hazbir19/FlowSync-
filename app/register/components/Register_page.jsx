@@ -154,19 +154,16 @@ export default function Register_page() {
                   className="px-3 py-2 rounded layout-background-color w-5/6 lg:w-full"
                 >
                   <option value="">-- Select Department --</option>
-                  <option value="Financial Department">
-                    Financial Department
-                  </option>
+                  <option value="HR Department">HR Department</option>
                   <option value="Deal Department">Deal Department</option>
                   <option value="Design Department">Design Department</option>
-                  <option value="Analysis Department">
-                    Analysis Department
-                  </option>
                   <option value="Product Department">
-                    Product (Development) Department
+                    Product Development Department
                   </option>
                   <option value="Testing Department">Testing Department</option>
-                  <option value="Billing Department">Billing Department</option>
+                  <option value="Billing Department">
+                    Billing and Packaging Department
+                  </option>
                 </select>
                 {errors.department && (
                   <p className="text-red-500 text-sm mt-1">

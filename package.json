@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/server": "^4.12.2",
     "@as-integrations/next": "^3.2.0",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "daisyui": "^5.0.43",
@@ -21,6 +22,7 @@
     "mongodb": "^6.17.0",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
+    "openai": "^5.7.0",
     "react": "^19.0.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
